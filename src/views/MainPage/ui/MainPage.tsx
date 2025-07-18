@@ -1,5 +1,5 @@
 "use client";
-import React, {type FC, useState, unstable_ViewTransition as ViewTransition} from "react";
+import React, {type FC, useState, unstable_ViewTransition as ViewTransition, useEffect} from "react";
 import cn from "clsx";
 import {motion} from "framer-motion";
 import {useRouter} from "next/navigation";
@@ -21,10 +21,14 @@ export const MainPage: FC<IProps> = ({products}) => {
         },
         200
     );
+    useEffect(()=> {
+        setIsLoading(false);
+    }, [])
     const handlerClick = (index: number) => {
         router.push(`/product/${products[index].id}`);
         setIsLoading(true);
     }
+
 
     return (
         <div className="flex">
