@@ -3,12 +3,12 @@ import {type FC, unstable_ViewTransition as ViewTransition, useEffect} from "rea
 import {motion} from "framer-motion";
 import {useRouter} from "next/navigation";
 import {type IProduct} from "@/shared/api";
-import {useTrackNavigation} from "@/shared/hooks";
 
 interface IProps {
     product: IProduct;
 }
-const clear = ()=>  {
+
+const clear = () => {
     window.document.body.style.position = "";
     window.document.body.style.overflowY = "";
 }
@@ -36,11 +36,13 @@ export const ProductPage: FC<IProps> = ({product}) => {
         router.push("/");
         clear();
     }
-    useTrackNavigation();
     return (
         <div className="relative w-full min-h-screen px-[50px] flex gap-[16px] mb-[50px]">
             <div className="sticky h-screen flex -top-[15px] z-20 justify-start w-1/2">
-                <button onClick={handlerBack} className={"mt-[10px] border border-white rounded-full h-min text-white py-[6px] px-[12px] cursor-pointer"}>
+                <button
+                    onClick={handlerBack}
+                    className={"mt-[10px] border border-white rounded-full h-min text-white py-[6px] px-[12px] cursor-pointer"}
+                >
                     Назад
                 </button>
                 <div className={""}>
@@ -76,12 +78,12 @@ export const ProductPage: FC<IProps> = ({product}) => {
                     transition={{duration: 0.5, ease: "linear", delay: 1}}
                 >
                     <h1 className={"text-7xl"}>
-                        {product.title.split("").map((char, index)=> (
+                        {product.title.split("").map((char, index) => (
                             <motion.span
                                 key={index}
                                 initial={{opacity: 0}}
                                 whileInView={{opacity: 1}}
-                                transition={{duration: 0.2, delay: 1/Math.max(0.1, product.title.length/index)}}
+                                transition={{duration: 0.2, delay: 1 / Math.max(0.1, product.title.length / index)}}
                             >
                                 {char}
                             </motion.span>
@@ -104,10 +106,12 @@ export const ProductPage: FC<IProps> = ({product}) => {
                     >
                         <p className="text-4xl font-semibold">{product.price} руб.</p>
                         <div className={"flex gap-x-[12px]"}>
-                            <button className="border border-black  text-black px-6 py-3 mt-4 rounded-lg cursor-pointer hover:scale-105 transition-all duration-200">
+                            <button
+                                className="border border-black  text-black px-6 py-3 mt-4 rounded-lg cursor-pointer hover:scale-105 transition-all duration-200">
                                 Добавить в корзину
                             </button>
-                            <button className="bg-red-600 text-white px-6 py-3 mt-4 rounded-lg cursor-pointer hover:scale-105 transition-all duration-200">
+                            <button
+                                className="bg-red-600 text-white px-6 py-3 mt-4 rounded-lg cursor-pointer hover:scale-105 transition-all duration-200">
                                 Купить
                             </button>
                         </div>

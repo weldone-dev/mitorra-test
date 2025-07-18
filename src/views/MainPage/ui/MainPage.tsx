@@ -3,13 +3,14 @@ import React, {type FC, useState, unstable_ViewTransition as ViewTransition, use
 import cn from "clsx";
 import {useRouter} from "next/navigation";
 import type {IProductsMainPage} from "@/shared/api";
-import {useDebouncedCallback, useTrackNavigation} from "@/shared/hooks";
+import {useDebouncedCallback} from "@/shared/hooks";
 
 interface IProps {
     products: IProductsMainPage;
+    prevPath: string;
 }
 
-export const MainPage: FC<IProps> = ({products}) => {
+export const MainPage: FC<IProps> = ({products, prevPath}) => {
     const router = useRouter();
 
     const [activeIndex, setActiveIndex] = useState(1);
@@ -27,17 +28,13 @@ export const MainPage: FC<IProps> = ({products}) => {
     }
     useLayoutEffect(() => {
         if (typeof window === "undefined") return;
-        const prevUrl = sessionStorage.getItem('prevUrl');
-        console.log('Предыдущий URL:', prevUrl);
 
-        const match = prevUrl?.match(/\/product\/(\d+)\/?$/);
+        const match = prevPath?.match(/\/product\/(\d+)\/?$/);
         if (match) {
             const id = parseInt(match[1], 10);
-            console.log({id, match})
             setActiveIndex(id - 1);
         }
     }, []);
-    useTrackNavigation();
     return (
         <div className="flex">
             {products.map((product, index) => (
