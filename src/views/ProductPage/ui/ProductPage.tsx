@@ -37,13 +37,12 @@ export const ProductPage: FC<IProps> = ({product}) => {
                 </button>
                 <div className={""}>
                     <ViewTransition name={`product_image-label-${product.id}`}>
-                        <Image
+                        <img
                             src={product.image}
                             alt={product.title}
                             width={600}
                             height={400}
                             className="object-contain"
-                            priority
                         />
                     </ViewTransition>
                 </div>
