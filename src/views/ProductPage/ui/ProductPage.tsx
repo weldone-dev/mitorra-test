@@ -1,5 +1,5 @@
 "use client";
-import {type FC, unstable_ViewTransition as ViewTransition, useEffect} from "react";
+import {type FC, unstable_ViewTransition as ViewTransition, useEffect, useLayoutEffect} from "react";
 import {motion} from "framer-motion";
 import {useRouter} from "next/navigation";
 import {type IProduct} from "@/shared/api";
@@ -16,7 +16,7 @@ export const ProductPage: FC<IProps> = ({product}) => {
     const router = useRouter();
 
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (typeof window === "undefined") return;
 
         window.scrollTo(0, 0);
@@ -64,7 +64,7 @@ export const ProductPage: FC<IProps> = ({product}) => {
                     className={"w-full"}
                     style={{backgroundColor: product.primaryColor}}
                     initial={{height: "100%"}}
-                    animate={{height: "50%"}}
+                    animate={{height: "426px"}}
                     transition={{duration: 1, ease: "easeOut", delay: 1}}
                 >
 
