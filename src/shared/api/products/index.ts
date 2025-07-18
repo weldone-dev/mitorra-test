@@ -16,3 +16,7 @@ export const getProductsMainPage = async () => ({
 export const getProduct= async (id: number) => ({
     product: Products.find((product)=>product.id === id)
 });
+
+export const getAllProduct= async ()=> ({
+    products: Products
+})
