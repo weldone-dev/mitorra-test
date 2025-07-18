@@ -1,6 +1,8 @@
 import {notFound} from "next/navigation";
 import {getAllProduct, getProduct} from "@/shared/api";
 import {ProductPage} from "@/views";
+
+
 interface IProps {
     params: Promise<{ id: string }>;
 }

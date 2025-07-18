@@ -1,34 +1,42 @@
 "use client";
 import {type FC, unstable_ViewTransition as ViewTransition, useEffect} from "react";
-import Image from "next/image";
 import {motion} from "framer-motion";
 import {useRouter} from "next/navigation";
 import {type IProduct} from "@/shared/api";
+import {useTrackNavigation} from "@/shared/hooks";
 
 interface IProps {
     product: IProduct;
 }
-
+const clear = ()=>  {
+    window.document.body.style.position = "";
+    window.document.body.style.overflowY = "";
+}
 export const ProductPage: FC<IProps> = ({product}) => {
     const router = useRouter();
+
+
     useEffect(() => {
         if (typeof window === "undefined") return;
 
         window.scrollTo(0, 0);
         window.document.body.style.position = "fixed";
         window.document.body.style.overflowY = "scroll";
+
         const timeout = setTimeout(() => {
-            window.document.body.style.position = "";
-            window.document.body.style.overflowY = "";
+            clear();
         }, 2100);
 
         return () => {
             clearTimeout(timeout);
+            clear();
         };
     }, []);
     const handlerBack = () => {
         router.push("/");
+        clear();
     }
+    useTrackNavigation();
     return (
         <div className="relative w-full min-h-screen px-[50px] flex gap-[16px] mb-[50px]">
             <div className="sticky h-screen flex -top-[15px] z-20 justify-start w-1/2">

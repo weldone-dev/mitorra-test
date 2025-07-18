@@ -1,10 +1,9 @@
 "use client";
-import React, {type FC, useState, unstable_ViewTransition as ViewTransition, useEffect} from "react";
+import React, {type FC, useState, unstable_ViewTransition as ViewTransition, useEffect, useLayoutEffect} from "react";
 import cn from "clsx";
-import {motion} from "framer-motion";
 import {useRouter} from "next/navigation";
 import type {IProductsMainPage} from "@/shared/api";
-import {useDebouncedCallback} from "@/shared/hooks";
+import {useDebouncedCallback, useTrackNavigation} from "@/shared/hooks";
 
 interface IProps {
     products: IProductsMainPage;
@@ -12,6 +11,7 @@ interface IProps {
 
 export const MainPage: FC<IProps> = ({products}) => {
     const router = useRouter();
+
     const [activeIndex, setActiveIndex] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const handleItemHover = useDebouncedCallback(
@@ -21,15 +21,23 @@ export const MainPage: FC<IProps> = ({products}) => {
         },
         200
     );
-    useEffect(()=> {
-        setIsLoading(false);
-    }, [])
     const handlerClick = (index: number) => {
         router.push(`/product/${products[index].id}`);
         setIsLoading(true);
     }
+    useLayoutEffect(() => {
+        if (typeof window === "undefined") return;
+        const prevUrl = sessionStorage.getItem('prevUrl');
+        console.log('Предыдущий URL:', prevUrl);
 
-
+        const match = prevUrl?.match(/\/product\/(\d+)\/?$/);
+        if (match) {
+            const id = parseInt(match[1], 10);
+            console.log({id, match})
+            setActiveIndex(id - 1);
+        }
+    }, []);
+    useTrackNavigation();
     return (
         <div className="flex">
             {products.map((product, index) => (
